@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.Video;
 
 [Serializable]
-public class SceneStruct
+public class ThemeStruct
 {
+    public string themeName;
     public List<QAStruct> qaList;
 }
 

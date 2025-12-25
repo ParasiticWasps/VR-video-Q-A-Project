@@ -7,10 +7,13 @@ using UnityEngine;
 /// </summary>
 public class VideoQACore : MonoBehaviour
 {
-
     public static VideoQACore Instance;
 
-    public List<SceneStruct> sceneList = new List<SceneStruct>();
+    public List<ThemeStruct> themeList = new List<ThemeStruct>();
+
+    public int Correct = 0;
+
+    public int Incorrect = 0;
 
     private void Awake()
     {
@@ -20,5 +23,4 @@ public class VideoQACore : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
 }

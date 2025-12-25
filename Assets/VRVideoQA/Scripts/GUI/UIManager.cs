@@ -4,12 +4,40 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject StartPanel;
+    public StartGameGUI StartPanel;
 
-    public GameObject EndPanel;
+    public EndGUI EndPanel;
 
-    public GameObject QAPanel;
+    public GameGUI QAPanel;
 
-    public GameObject ListPanel;
+    public ListProjectGUI ListPanel;
 
+    private void Awake()
+    {
+        Setup();
+    }
+
+    public void Setup()
+    {
+        StartPanel.gameObject.SetActive(true);
+        EndPanel.gameObject.SetActive(false);
+        QAPanel.gameObject.SetActive(false);
+        ListPanel.gameObject.SetActive(false);
+
+        StartPanel.OnClickedStart += StartGame;
+        ListPanel.OnEnterTheme += EnterGameGUI;
+    }
+
+    public void StartGame()
+    {
+        StartPanel.gameObject.SetActive(false);
+        ListPanel.gameObject.SetActive(true);
+        ListPanel.Setup();
+    }
+
+    private void EnterGameGUI(int themeIndex)
+    {
+        QAPanel.Show(VideoQACore.Instance.themeList[themeIndex].qaList);
+        ListPanel.gameObject.SetActive(false);
+    }
 }
