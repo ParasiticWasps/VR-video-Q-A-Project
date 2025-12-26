@@ -16,6 +16,13 @@ public class VideoManager : MonoBehaviour
             instance = this;
     }
 
+    public void LoadClip(VideoClip clip)
+    {
+        videoPlayer.clip = clip;
+        videoPlayer.Play();
+        videoPlayer.Pause();
+    }
+
     /// <summary>
     /// ≤•∑≈ ”∆µ
     /// </summary>

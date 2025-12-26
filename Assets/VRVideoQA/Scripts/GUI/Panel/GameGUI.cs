@@ -49,6 +49,8 @@ public class GameGUI : MonoBehaviour
 
     private IEnumerator SetupCoroutine()
     {
+        videoPanel.LoadClip(clip);
+
         yield return new WaitForSeconds(2.0f);
 
         videoPanel.PlayVideo();
@@ -65,13 +67,15 @@ public class GameGUI : MonoBehaviour
 
     private void SwitchPanel(bool isQaShow)
     {
-        videoPanel.gameObject.SetActive(!isQaShow);
         QAPanel.gameObject.SetActive(isQaShow);
     }
 
     #region 选择题答题后处理
     public void NextQuestion()
     {
+        videoPanel.OnPlayFinished -= VideoPlayFinished;
+        QAPanel.OnChoiceSelected -= QAPanelSelected;
+
         currQuestionIndex++;
         if (currQuestionIndex >= qaList[currQAIndex].QuestionList.Count)
         {
@@ -92,7 +96,14 @@ public class GameGUI : MonoBehaviour
         }
 
         currQuestionIndex = 0;
-        QAPanel.Setup(qaList[currQAIndex].QuestionList[currQuestionIndex]);
+        SwitchPanel(false);
+        clip = qaList[currQAIndex].clip;
+
+        videoPanel.OnPlayFinished += VideoPlayFinished;
+        QAPanel.OnChoiceSelected += QAPanelSelected;
+
+        StartCoroutine(SetupCoroutine());
+        //QAPanel.Setup(qaList[currQAIndex].QuestionList[currQuestionIndex]);
     }
 
     private void NetTheme()
@@ -102,14 +113,15 @@ public class GameGUI : MonoBehaviour
 
     #endregion
 
-    private void QAPanelSelected(bool b)
+    private void QAPanelSelected()
     {
         StartCoroutine(QAPanelSelectedCoroutine());
     }
 
     private IEnumerator QAPanelSelectedCoroutine()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
+
         NextQuestion();
     }
 }

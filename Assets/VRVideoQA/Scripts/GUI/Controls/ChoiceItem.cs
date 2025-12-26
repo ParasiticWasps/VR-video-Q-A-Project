@@ -6,20 +6,33 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEngine.UI.Toggle;
 
 public class ChoiceItem : MonoBehaviour
 {
-    public Toggle selected;
+    public Button selectedButton;
     
     public TextMeshProUGUI choiceText;
 
-    public TextMeshProUGUI hint; // 对或者错图标
+    public Sprite correctImage; // 正确图标
+
+    public Sprite incorrectImage; // 错误图标
+
+    public Image hintImage;
+
+    public Action OnIncorrectSelected; // 选择错误选项时触发的事件
 
     public bool isAwser;
 
-    public void Setup(string _text, bool _isAwser, Action<bool> toggleEvent)
+    public void Setup(string _text, bool _isAwser)
     {
-        selected.onValueChanged.AddListener((value) =>
+        isAwser = _isAwser;
+        selectedButton.onClick.RemoveAllListeners();
+
+        hintImage.gameObject.SetActive(false);
+        choiceText.text = _text;
+
+        selectedButton.onClick.AddListener(() =>
         {
             if (isAwser)
             {
@@ -28,20 +41,15 @@ public class ChoiceItem : MonoBehaviour
             else
             {
                 VideoQACore.Instance.Incorrect += 1;
+                OnIncorrectSelected?.Invoke();
             }
-
-            toggleEvent?.Invoke(value);
+            ShowHintImage();
         });
-
-        hint.gameObject.SetActive(false);
-        choiceText.text = _text;
-        selected.isOn = false;
     }
 
-    private void ShowHintText(string _hint)
+    private void ShowHintImage()
     {
-        hint.gameObject.SetActive(true);
-        hint.text = _hint;
-        hint.color = isAwser ? Color.green : Color.red;
+        hintImage.gameObject.SetActive(true);
+        hintImage.sprite = isAwser ? correctImage : incorrectImage;
     }
 }

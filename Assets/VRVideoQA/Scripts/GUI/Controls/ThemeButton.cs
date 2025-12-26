@@ -11,25 +11,34 @@ public class ThemeButton : MonoBehaviour
 
     private Button Button;
 
-    public int sceneIndex;
+    public Image themeImage;
+
+    public Image BorderImage;
+
+    public int themeIndex;
 
     public Action<int> OnClickButton;
 
     private void Awake()
     {
         Button = GetComponent<Button>();
-
         titleText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Start()
     {
-        Button.onClick.AddListener(() => { OnClickButton?.Invoke(sceneIndex); });
+        Button.onClick.AddListener(() => { OnClickButton?.Invoke(themeIndex); });
     }
 
-    public void Setup(string title, int _sceneIndex)
+    public void Setup(string title, Sprite img, int _themeIndex)
     {
-        sceneIndex = _sceneIndex;
+        themeIndex = _themeIndex;
         titleText.text = title;
+        themeImage.sprite = img;
+    }
+
+    public void ButtonClickStyle(Color color)
+    {
+        BorderImage.color = color;
     }
 }

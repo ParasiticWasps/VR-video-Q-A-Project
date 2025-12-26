@@ -14,7 +14,7 @@ public class QAPanel : MonoBehaviour
 
     public QuestionStruct currPkg;
 
-    public Action<bool> OnChoiceSelected;
+    public Action OnChoiceSelected;
 
     public void Setup(QuestionStruct pkg)
     {
@@ -24,12 +24,13 @@ public class QAPanel : MonoBehaviour
         QuestionText.text = currPkg.question;
 
         // Setup choices.
-        OnChoiceSelected += ChoiceSelected;
         for (int i = 0; i < Choices.Count; i++)
         {
             if (i < currPkg.choices.Count)
             {
-                Choices[i].Setup(currPkg.choices[i].choice, currPkg.choices[i].isAnswer, OnChoiceSelected);
+                Choices[i].OnIncorrectSelected += ChoiceSelected;
+                Choices[i].OnIncorrectSelected += OnChoiceSelected;
+                Choices[i].Setup(currPkg.choices[i].choice, currPkg.choices[i].isAnswer);
             }
         }
 
@@ -38,15 +39,8 @@ public class QAPanel : MonoBehaviour
         AnswerText.gameObject.SetActive(false);
     }
 
-    private void ChoiceSelected(bool a)
+    private void ChoiceSelected()
     {
         AnswerText.gameObject.SetActive(true);
-        // StartCoroutine(ChoiceSelectedCoroutine());
-    }
-
-    private IEnumerator ChoiceSelectedCoroutine()
-    {
-        yield return new WaitForSeconds(3.0f);
-
     }
 }

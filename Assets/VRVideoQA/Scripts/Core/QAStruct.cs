@@ -9,6 +9,7 @@ using UnityEngine.Video;
 public class ThemeStruct
 {
     public string themeName;
+    public Sprite themeImage;
     public List<QAStruct> qaList;
 }
 

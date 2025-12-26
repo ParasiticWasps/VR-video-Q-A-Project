@@ -10,9 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameGUI QAPanel;
 
-    public ListProjectGUI ListPanel;
-
-    private void Awake()
+    private void Start()
     {
         Setup();
     }
@@ -22,22 +20,32 @@ public class UIManager : MonoBehaviour
         StartPanel.gameObject.SetActive(true);
         EndPanel.gameObject.SetActive(false);
         QAPanel.gameObject.SetActive(false);
-        ListPanel.gameObject.SetActive(false);
 
         StartPanel.OnClickedStart += StartGame;
-        ListPanel.OnEnterTheme += EnterGameGUI;
+        QAPanel.OnNextTheme += LearnFinished;
+        EndPanel.OnBackEvent += BackSelectPanel;
+
+        StartPanel.Setup();
     }
 
-    public void StartGame()
+    private void StartGame(int themeIndex)
     {
         StartPanel.gameObject.SetActive(false);
-        ListPanel.gameObject.SetActive(true);
-        ListPanel.Setup();
+        QAPanel.gameObject.SetActive(true);
+        QAPanel.Show(VideoQACore.Instance.themeList[themeIndex].qaList);
     }
 
-    private void EnterGameGUI(int themeIndex)
+    private void LearnFinished()
     {
-        QAPanel.Show(VideoQACore.Instance.themeList[themeIndex].qaList);
-        ListPanel.gameObject.SetActive(false);
+        EndPanel.gameObject.SetActive(true);
+        EndPanel.Setup();
+
+        QAPanel.gameObject.SetActive(false);
+    }
+
+    private void BackSelectPanel()
+    {
+        EndPanel.gameObject.SetActive(false);
+        StartPanel.gameObject.SetActive(true);
     }
 }
