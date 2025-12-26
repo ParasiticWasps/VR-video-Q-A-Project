@@ -12,13 +12,18 @@ public class QAPanel : MonoBehaviour
 
     public TextMeshProUGUI AnswerText;
 
+    public TextMeshProUGUI delayText;
+
     public QuestionStruct currPkg;
 
     public Action OnChoiceSelected;
 
+    private int delaySeconds = 5; // 界面关闭倒计时
+
     public void Setup(QuestionStruct pkg)
     {
         currPkg = pkg;
+        delayText.gameObject.SetActive(false);
 
         // Setup question.
         QuestionText.text = currPkg.question;
@@ -41,6 +46,18 @@ public class QAPanel : MonoBehaviour
 
     private void ChoiceSelected()
     {
+        delayText.gameObject.SetActive(true);
         AnswerText.gameObject.SetActive(true);
+        StartCoroutine(DelayCoroutine());
+    }
+
+    private IEnumerator DelayCoroutine()
+    {
+        while(delaySeconds >= 0)
+        {
+            delayText.text = $"{delaySeconds}";
+            delaySeconds -= 1;
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }
