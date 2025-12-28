@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QAPanel : MonoBehaviour
 {
-    public TextMeshProUGUI QuestionText;
+    public Text QuestionText;
 
     public List<ChoiceItem> Choices = new List<ChoiceItem>();
 
     public TextMeshProUGUI AnswerText;
 
-    public TextMeshProUGUI delayText;
+    public Text delayText;
 
     public QuestionStruct currPkg;
 
@@ -33,7 +34,10 @@ public class QAPanel : MonoBehaviour
         {
             if (i < currPkg.choices.Count)
             {
+                Choices[i].OnCorrectSelected += ChoiceSelected;
+                Choices[i].OnCorrectSelected += OnChoiceSelected;
                 Choices[i].OnIncorrectSelected += ChoiceSelected;
+                Choices[i].OnIncorrectSelected += OnIncorrectSelectedEvent;
                 Choices[i].OnIncorrectSelected += OnChoiceSelected;
                 Choices[i].Setup(currPkg.choices[i].choice, currPkg.choices[i].isAnswer);
             }
@@ -44,20 +48,46 @@ public class QAPanel : MonoBehaviour
         AnswerText.gameObject.SetActive(false);
     }
 
+    private void OnIncorrectSelectedEvent()
+    {
+        AnswerText.gameObject.SetActive(true);
+    }
+
     private void ChoiceSelected()
     {
         delayText.gameObject.SetActive(true);
-        AnswerText.gameObject.SetActive(true);
         StartCoroutine(DelayCoroutine());
     }
 
     private IEnumerator DelayCoroutine()
     {
-        while(delaySeconds >= 0)
+        delaySeconds = 5;
+        while (delaySeconds >= 0)
         {
+            Debug.Log($"delaySeconds: {delaySeconds}");
             delayText.text = $"{delaySeconds}";
             delaySeconds -= 1;
             yield return new WaitForSeconds(1.0f);
         }
+
+        yield break;
+    }
+
+    public bool ClearAllEvent()
+    {
+        for (int i = 0; i < Choices.Count; i++)
+        {
+            Debug.Log($"Clear: {i}");
+            if (i < currPkg.choices.Count)
+            {
+                Choices[i].OnCorrectSelected -= ChoiceSelected;
+                Choices[i].OnCorrectSelected -= OnChoiceSelected;
+                Choices[i].OnIncorrectSelected -= ChoiceSelected;
+                Choices[i].OnIncorrectSelected -= OnIncorrectSelectedEvent;
+                Choices[i].OnIncorrectSelected -= OnChoiceSelected;
+                //Choices[i].Setup(currPkg.choices[i].choice, currPkg.choices[i].isAnswer);
+            }
+        }
+        return true;
     }
 }

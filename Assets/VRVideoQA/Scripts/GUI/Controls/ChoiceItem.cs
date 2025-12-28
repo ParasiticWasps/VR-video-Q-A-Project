@@ -22,13 +22,15 @@ public class ChoiceItem : MonoBehaviour
 
     public Action OnIncorrectSelected; // 选择错误选项时触发的事件
 
+    public Action OnCorrectSelected; // 选择正确选项时触发的事件
+
     public bool isAwser;
 
     public void Setup(string _text, bool _isAwser)
     {
         isAwser = _isAwser;
         selectedButton.onClick.RemoveAllListeners();
-
+       
         hintImage.gameObject.SetActive(false);
         choiceText.text = _text;
 
@@ -37,6 +39,7 @@ public class ChoiceItem : MonoBehaviour
             if (isAwser)
             {
                 VideoQACore.Instance.Correct += 1;
+                OnCorrectSelected?.Invoke();
             }
             else
             {

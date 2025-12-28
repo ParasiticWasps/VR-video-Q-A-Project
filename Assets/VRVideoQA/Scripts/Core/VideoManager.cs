@@ -1,3 +1,4 @@
+using Pico.Platform;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ public class VideoManager : MonoBehaviour
     public void LoadClip(VideoClip clip)
     {
         videoPlayer.clip = clip;
-        videoPlayer.Play();
+        //videoPlayer.Play();
         videoPlayer.Pause();
     }
 
@@ -35,10 +36,17 @@ public class VideoManager : MonoBehaviour
 
     private IEnumerator WaitPlayFinishCoroutine(Action callback)
     {
-        yield return new WaitUntil(() => videoPlayer.isPlaying == false);
+        yield return new WaitUntil(() => 
+        {
+            int currTime = (int)videoPlayer.time;
+            int lengthTime = (int)videoPlayer.length;
+            Debug.Log($"{currTime} / {lengthTime}");
+            return currTime == lengthTime;
+        });
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
+        videoPlayer.clip = null;
         callback?.Invoke();
     }
 }

@@ -51,7 +51,7 @@ public class GameGUI : MonoBehaviour
     {
         videoPanel.LoadClip(clip);
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(0.1f);
 
         videoPanel.PlayVideo();
     }
@@ -75,6 +75,7 @@ public class GameGUI : MonoBehaviour
     {
         videoPanel.OnPlayFinished -= VideoPlayFinished;
         QAPanel.OnChoiceSelected -= QAPanelSelected;
+        QAPanel.ClearAllEvent();
 
         currQuestionIndex++;
         if (currQuestionIndex >= qaList[currQAIndex].QuestionList.Count)
