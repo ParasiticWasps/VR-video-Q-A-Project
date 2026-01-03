@@ -97,3 +97,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Assets/VRVideoQA/Resources/Video/1_1.mp4
+Assets/VRVideoQA/Resources/Video/1_2.mp4
+Assets/VRVideoQA/Resources/Model/展厅.fbx
+Assets/VRVideoQA/Resources/Font/Alibaba.asset
