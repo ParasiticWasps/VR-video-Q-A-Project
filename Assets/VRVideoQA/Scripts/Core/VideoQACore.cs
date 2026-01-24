@@ -11,6 +11,10 @@ public class VideoQACore : MonoBehaviour
 
     public List<ThemeStruct> themeList = new List<ThemeStruct>();
 
+    public ThemeStruct CurrTheme { get => themeList[ThemeIndex]; }
+
+    public int ThemeIndex = 0;
+
     public int Correct = 0;
 
     public int Incorrect = 0;

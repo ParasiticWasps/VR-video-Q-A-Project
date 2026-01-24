@@ -23,6 +23,7 @@ public class QAPanel : MonoBehaviour
 
     public void Setup(QuestionStruct pkg)
     {
+        ClearAllEvent();
         currPkg = pkg;
         delayText.gameObject.SetActive(false);
 

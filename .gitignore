@@ -103,3 +103,5 @@ Assets/VRVideoQA/Resources/Model/展厅.fbx
 Assets/VRVideoQA/Resources/Font/Alibaba.asset
 Assets/VRVideoQA/Resources/Video/主题一视频第二段.mp4
 Assets/VRVideoQA/Resources/Video/主题一视频第一段.mp4
+*.mp4
+*.meta

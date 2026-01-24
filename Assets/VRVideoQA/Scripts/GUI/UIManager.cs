@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     private void StartGame(int themeIndex)
     {
+        VideoQACore.Instance.ThemeIndex = themeIndex;
         StartPanel.gameObject.SetActive(false);
         QAPanel.gameObject.SetActive(true);
         QAPanel.Show(VideoQACore.Instance.themeList[themeIndex].qaList);
@@ -37,10 +39,13 @@ public class UIManager : MonoBehaviour
 
     private void LearnFinished()
     {
-        EndPanel.gameObject.SetActive(true);
-        EndPanel.Setup();
-
-        QAPanel.gameObject.SetActive(false);
+        bool isLearnFinished = VideoQACore.Instance.ThemeIndex + 1 >= VideoQACore.Instance.themeList.Count;
+        Action action = isLearnFinished ? 
+            () => { EndPanel.Setup(); } : 
+            () => { VideoQACore.Instance.ThemeIndex++; QAPanel.Show(VideoQACore.Instance.CurrTheme.qaList); };
+        EndPanel.gameObject.SetActive(isLearnFinished);
+        QAPanel.gameObject.SetActive(!isLearnFinished);
+        action?.Invoke();
     }
 
     private void BackSelectPanel()

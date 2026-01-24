@@ -41,7 +41,7 @@ public class VideoManager : MonoBehaviour
             int currTime = (int)videoPlayer.time;
             int lengthTime = (int)videoPlayer.length;
             Debug.Log($"{currTime} / {lengthTime}");
-            return currTime == lengthTime;
+            return currTime == lengthTime || currTime + 1 == lengthTime;
         });
 
         yield return new WaitForSeconds(2.0f);

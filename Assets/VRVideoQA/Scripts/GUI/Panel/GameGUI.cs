@@ -73,13 +73,14 @@ public class GameGUI : MonoBehaviour
     #region 选择题答题后处理
     public void NextQuestion()
     {
-        videoPanel.OnPlayFinished -= VideoPlayFinished;
-        QAPanel.OnChoiceSelected -= QAPanelSelected;
-        QAPanel.ClearAllEvent();
-
+        Debug.Log("NextQuestion");
         currQuestionIndex++;
         if (currQuestionIndex >= qaList[currQAIndex].QuestionList.Count)
         {
+            Debug.Log($"NextQuestion: {currQuestionIndex} / {qaList[currQAIndex].QuestionList.Count}");
+            videoPanel.OnPlayFinished -= VideoPlayFinished;
+            QAPanel.OnChoiceSelected -= QAPanelSelected;
+            QAPanel.ClearAllEvent();
             NextQA();
             return;
         }
@@ -92,7 +93,7 @@ public class GameGUI : MonoBehaviour
         currQAIndex++;
         if (currQAIndex >= qaList.Count)
         {
-            NetTheme();
+            NextTheme();
             return;
         }
 
@@ -107,8 +108,11 @@ public class GameGUI : MonoBehaviour
         //QAPanel.Setup(qaList[currQAIndex].QuestionList[currQuestionIndex]);
     }
 
-    private void NetTheme()
+    private void NextTheme()
     {
+        Debug.Log("Next Theme");
+        currQAIndex = 0;
+        currQuestionIndex = 0;
         OnNextTheme?.Invoke();
     }
 
