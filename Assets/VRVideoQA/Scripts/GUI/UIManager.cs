@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
 
         StartPanel.OnClickedStart += StartGame;
         QAPanel.OnNextTheme += LearnFinished;
+        QAPanel.LearnFinishedEvent += BackEndPanelFromGameGUI;
         EndPanel.OnBackEvent += BackSelectPanel;
 
         StartPanel.Setup();
@@ -52,5 +53,12 @@ public class UIManager : MonoBehaviour
     {
         EndPanel.gameObject.SetActive(false);
         StartPanel.gameObject.SetActive(true);
+    }
+
+    private void BackEndPanelFromGameGUI()
+    {
+        QAPanel.gameObject.SetActive(false);
+        EndPanel.gameObject.SetActive(true);
+        EndPanel.Setup();
     }
 }
