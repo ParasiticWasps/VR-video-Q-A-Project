@@ -23,6 +23,8 @@ public class GameGUI : MonoBehaviour
 
     public Action OnNextTheme;
 
+    public event Action BackSelectEvent;
+
     #region Setup
 
     public void Show(List<QAStruct> _qalist)
@@ -93,7 +95,8 @@ public class GameGUI : MonoBehaviour
         currQAIndex++;
         if (currQAIndex >= qaList.Count)
         {
-            NextTheme();
+            //NextTheme();
+            BackSelectEvent?.Invoke();
             return;
         }
 
