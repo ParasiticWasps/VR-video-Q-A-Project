@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
 
     private void BackSelectPanel()
     {
+        VideoQACore.Instance.Correct = 0;
+        VideoQACore.Instance.Incorrect = 0;
         EndPanel.gameObject.SetActive(false);
         StartPanel.gameObject.SetActive(true);
     }
@@ -60,5 +62,14 @@ public class UIManager : MonoBehaviour
         QAPanel.gameObject.SetActive(false);
         EndPanel.gameObject.SetActive(true);
         EndPanel.Setup();
+    }
+
+    public void StopGame()
+    {
+        VideoQACore.Instance.Correct = 0;
+        VideoQACore.Instance.Incorrect = 0;
+        VideoManager.instance.Stop();
+        QAPanel.gameObject.SetActive(false);
+        StartPanel.gameObject.SetActive(true);
     }
 }

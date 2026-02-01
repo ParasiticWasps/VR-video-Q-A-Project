@@ -38,8 +38,8 @@ public class QAPanel : MonoBehaviour
                 Choices[i].OnCorrectSelected += ChoiceSelected;
                 Choices[i].OnCorrectSelected += OnChoiceSelected;
                 Choices[i].OnIncorrectSelected += ChoiceSelected;
-                Choices[i].OnIncorrectSelected += OnIncorrectSelectedEvent;
                 Choices[i].OnIncorrectSelected += OnChoiceSelected;
+                Choices[i].OnIncorrectSelected += OnIncorrectSelectedEvent;
                 Choices[i].Setup(currPkg.choices[i].choice, currPkg.choices[i].isAnswer);
             }
         }

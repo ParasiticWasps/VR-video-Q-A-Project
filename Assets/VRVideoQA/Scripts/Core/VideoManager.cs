@@ -49,4 +49,12 @@ public class VideoManager : MonoBehaviour
         videoPlayer.clip = null;
         callback?.Invoke();
     }
+
+    /// <summary>
+    /// Õ£÷π≤•∑≈ ”∆µ
+    /// </summary>
+    public void Stop()
+    {
+        videoPlayer?.Stop();
+    }
 }
